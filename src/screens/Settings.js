@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button, Col, Container, Row } from "reactstrap";
+import React, {useState, useEffect} from "react";
+import {useNavigate} from "react-router-dom";
+import {Button, Col, Container, Row} from "reactstrap";
 import axios from "axios";
 
 export default function Settings() {
@@ -8,9 +8,7 @@ export default function Settings() {
 
   const [selectedCategory, setSelectedCategory] = useState(9);
   const [selectedDifficulty, setSelectedDifficulty] = useState("easy");
-  console.log("🔺  RAM - Settings - selectedDifficulty", selectedDifficulty);
   const [categoryList, setCategoryList] = useState([]);
-  console.log("🔺  RAM - Settings - categoryList", categoryList);
 
   async function getCategoryList() {
     const response = await axios.get("https://opentdb.com/api_category.php");
@@ -28,9 +26,8 @@ export default function Settings() {
         "&difficulty=" +
         selectedDifficulty +
         "&type=multiple";
-      console.log("🔺  RAM - handleStart - url", url);
 
-      navigate("/question", { state: { url } });
+      navigate("/question", {state: {url}});
     } else {
       return (
         <div className="alert alert-primary" role="alert">
@@ -60,9 +57,7 @@ export default function Settings() {
     justifyContent: "center",
   };
 
-
-  console.log("🔺  RAM - Settings - categoryList", categoryList)
-  if( categoryList.length ===0 ) return <div>Loading....</div>
+  if (categoryList.length === 0) return <div>Loading....</div>;
   return (
     <Container>
       <Row>
@@ -79,8 +74,7 @@ export default function Settings() {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-              }}
-            >
+              }}>
               Selection Difficulty:
             </div>
 
@@ -92,8 +86,7 @@ export default function Settings() {
                 alignItems: "center",
                 flexDirection: "row",
                 justifyContent: "center",
-              }}
-            >
+              }}>
               <button
                 type="button "
                 style={
@@ -105,8 +98,7 @@ export default function Settings() {
                     : {}
                 }
                 className="btn btn-primary"
-                onClick={() => setSelectedDifficulty("easy")}
-              >
+                onClick={() => setSelectedDifficulty("easy")}>
                 easy
               </button>
               <button
@@ -120,8 +112,7 @@ export default function Settings() {
                       }
                     : {}
                 }
-                onClick={() => setSelectedDifficulty("medium")}
-              >
+                onClick={() => setSelectedDifficulty("medium")}>
                 medium
               </button>
               <button
@@ -135,8 +126,7 @@ export default function Settings() {
                     : {}
                 }
                 className="btn btn-primary"
-                onClick={() => setSelectedDifficulty("hard")}
-              >
+                onClick={() => setSelectedDifficulty("hard")}>
                 hard
               </button>
             </div>
@@ -149,19 +139,17 @@ export default function Settings() {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-              }}
-            >
+              }}>
               Selection Category:
             </div>
             <div style={my_Style}>
               <select
-                style={{ ...myStyle, height: 50, width: 411 }}
+                style={{...myStyle, height: 50, width: 411}}
                 onChange={(e) => {
                   setSelectedCategory(e.target.value);
                 }}
                 name="selection"
-                id="selection"
-              >
+                id="selection">
                 {categoryList.map((categoryItem) => (
                   <option key={categoryItem.id} value={categoryItem.id}>
                     {categoryItem.name}
@@ -185,8 +173,7 @@ export default function Settings() {
                   fontSize: 25,
                   marginTop: 30,
                 }}
-                onClick={handleStart}
-              >
+                onClick={handleStart}>
                 Let's Start The Game
               </Button>
             </div>

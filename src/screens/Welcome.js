@@ -1,10 +1,12 @@
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import colors from "../colors";
+import screenNames from "../screenNames";
 
 export default function Welcome() {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/settings");
+    navigate(screenNames.settings);
   };
 
   return (
@@ -15,16 +17,14 @@ export default function Welcome() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-      }}
-    >
+      }}>
       <h2
         style={{
-          color: "white",
+          color: colors.white,
           fontSize: 40,
           marginTop: 300,
           width: 500,
-        }}
-      >
+        }}>
         Welcome
       </h2>
       <button
@@ -39,8 +39,7 @@ export default function Welcome() {
           fontSize: 40,
           width: 500,
         }}
-        onClick={handleClick}
-      >
+        onClick={handleClick}>
         Get Started
       </button>
     </div>
