@@ -11,6 +11,7 @@ export default function Question() {
 
   const [data, setData] = useState(null);
   const [index, setIndex] = useState(0);
+  const [resetted, setResetted] = useState(false);
 
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [selectStatus, setSelectStatus] = useState("default");
@@ -28,7 +29,6 @@ export default function Question() {
   }
 
   function findSuitableType(answer) {
-    console.log("answer", answer, selectedAnswer, data[index].correct_answer);
     if (selectStatus === "default") {
       return "default";
     } else if (selectStatus === "selecting") {
@@ -46,28 +46,34 @@ export default function Question() {
     if (selectStatus === "selecting") {
       setTimeout(() => {
         setSelectStatus("showResult");
-      }, 4000);
+      }, 1000);
     } else if (selectStatus === "showResult") {
-      // setIndex(index + 1);
-      // setSelectedAnswer(selected_answer);
-      // if (selected_answer === data[index].correct_answer) {
-      //   console.log("doğru cevapladın");
-      //   const isLastQuestion = data.length === index + 1;
-      //   if (isLastQuestion) {
-      //     navigate("/win");
-      //   } else setIndex(index + 1);
-      // } else {
-      //   navigate("/gameover");
-      //   console.log("yanlış cevap");
-      // }
+      console.log("first");
 
-      setTimeout(() => {
-        setIndex(index + 1);
-        setSelectStatus("default");
-        setSelectedAnswer(null);
-      }, 4000);
+      if (!resetted) {
+        setTimeout(() => {
+          setResetted(true);
+
+          if (selectedAnswer === data[index].correct_answer) {
+            console.log("doğru cevapladın");
+            const isLastQuestion = data.length === index + 1;
+            if (isLastQuestion) {
+              navigate("/win");
+            } else {
+              setIndex(index + 1);
+              setSelectStatus("default");
+              setSelectedAnswer(null);
+            }
+          } else {
+            navigate("/gameover");
+            console.log("yanlış cevap");
+          }
+        }, 1000);
+      }
+    } else if (selectStatus === "default") {
+      setResetted(false);
     }
-  }, [selectStatus, index, selectedAnswer]);
+  }, [selectStatus, index, resetted, selectedAnswer, setResetted, navigate, data]);
 
   useEffect(() => {
     getData();
