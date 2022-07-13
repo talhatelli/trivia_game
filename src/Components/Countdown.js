@@ -1,24 +1,16 @@
-import * as React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-
-export default function Countdown() {
-  const [counter, setCounter] = React.useState(600);
-  const navigate = useNavigate();
-
-  React.useEffect(() => {
-    if (counter <= 0) {
-      navigate("/gameover");
-    }
-    const timer =
-      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
-
-    return () => clearInterval(timer);
-  }, [counter]);
+import React, {useState} from "react";
+import CountDwn from "react-number-count-down";
+export default function Countdown(props) {
+  const [fromValue, setFromValue] = useState(50);
 
   return (
-    <div className="Coundown">
-      <div>Countdown: {counter}</div>
-    </div>
+    <CountDwn
+      from={fromValue}
+      to={0}
+      type={"-"}
+      addon={"seconds"}
+      interval={1}
+      onComplete={() => alert("Count down completed")}
+    />
   );
-} // süre 15 saniye  // her soruda olacak //her doğru tıklndığinda tekrarlanacak
+}
